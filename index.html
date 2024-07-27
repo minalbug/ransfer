@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flasher</title>
+    <style>
+             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;900&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFFFFF;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        .login-container {
+            padding: 20px;
+            border-radius: 8px;
+          width: 100%;
+            text-align: center;
+            margin-top: 27%;
+        }
+        .pin-display {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .pin-input {
+            width: 34px;
+            height: 34px;
+            margin: 5px;
+            font-size: 24px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            justify-items: center;
+        }
+        .keypad button {
+            width: 70px;
+            height: 70px;
+            font-size: 24px;
+            background-color: #FAD088;
+            color: #ffffff;
+            border: none;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #FAD088;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .submit-btn:disabled {
+            background-color: #cccccc;
+        }
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 70%;
+            z-index: 1000;
+        }
+        .popup-container.error {
+            border: 2px solid #ff0000;
+        }
+        .popup-container.success {
+            border: 2px solid #00ff00;
+        }
+        .popup-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .popup-close {
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+        .popup-ok {
+            background-color: #00ff00;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            
+            border-radius: 4px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+body {
+    margin: 0;
+}
+* {
+  margin: 0 auto
+}
+
+.content {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-start;
+}
+
+.rope {
+    width: 2px;
+    height: 0px;
+    background-color: #000;
+}
+
+.left-rope {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-150%);
+    height: 70px;
+}
+
+.right-rope {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(150%);
+    height: 70px;
+}
+
+.welcome-message {
+    position: relative;
+    background-color: #fff;
+    padding: 6px 9px;
+    border: 2px solid #000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+body {
+}
+#trigger {
+  
+  color: blue;
+  text-decoration: underline;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 342px;
+  background-color: white;
+  box-shadow: 0px 30px 30px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1000;
+  background: #F8F8F8;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.popup-content {
+  padding: 20px;
+  position: relative;
+}
+
+.popup-content input {
+  display: block;
+  margin: 13px auto;
+  width: 92%;
+  padding: 10px;
+  border: 1px solid #FAD088;
+  border-radius: 3px;
+  font-size: 17px;
+}
+
+.popup-content button {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px;
+  background-color: #FAD088;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.popup-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+}
+
+.account-details {
+  margin-top: 20px;
+}
+
+#copy-button {
+  background-color: lightgrey;
+}
+
+.copy-icon {
+  margin-left: 5px;
+}
+button {
+    font-family: 'Poppins', sans-serif;
+}
+input {
+     font-family: 'Poppins', sans-serif;
+}
+a {
+  text-decoration: none;
+}
+    </style>
+</head>
+<body>
+     <div class="content">
+       <div class="rope left-rope"></div>
+       <div class="rope right-rope"></div>
+       <div class="welcome-message">
+         <center>
+        <strong> Welcome!</strong>
+       <br>
+       <p>Login to proceed</p>
+       </center></div>
+     </div>
+     <br>
+     <br>
+    <div class="login-container">
+      <img src="logo.jpeg" alt="" style="width: 160px; clip-path: circle();">
+        <h2>Enter PIN</h2>
+        <div class="pin-display">
+            <input type="password" class="pin-input" maxlength="1" readonly>
+            <input type="password" class="pin-input" maxlength="1" readonly>
+            <input type="password" class="pin-input" maxlength="1" readonly>
+            <input type="password" class="pin-input" maxlength="1" readonly>
+        </div>
+        <br><br>
+        <div class="keypad">
+            <button onclick="inputPin('1')">1</button>
+            <button onclick="inputPin('2')">2</button>
+            <button onclick="inputPin('3')">3</button>
+            <button onclick="inputPin('4')">4</button>
+            <button onclick="inputPin('5')">5</button>
+            <button onclick="inputPin('6')">6</button>
+            <button onclick="inputPin('7')">7</button>
+            <button onclick="inputPin('8')">8</button>
+            <button onclick="inputPin('9')">9</button>
+            <button onclick="clearPin()" style="padding: 5px; font-size: 16px;">Clear</button>
+            <button onclick="inputPin('0')">0</button>
+            <button onclick="deletePin()" style="padding: 5px; font-size: 16px;">Delete</button>
+        </div>
+        <button class="submit-btn" id="submitBtn" disabled>Submit</button>
+      <br>
+      <br>
+    <p id="trigger">Click me to open the popup</p>
+
+    </div>
+    </div>
+      <div id="popup1" class="popup">
+        <div class="popup-content">
+          <span class="close" id="close1" style="font-size: 25px;">&times;</span>
+          <h2 style="font-size: 19px; padding-bottom: 14px;">Buy Pin-Code</h2>
+          <hr>
+          <p style="padding-top: 14px;">Please note that the Pincode costs <strong style="color: #FAD088;">₦5,500</strong>. We will send the Pincode when payment is confirmed. Do not buy from another vendor; be warned.</p>
+          <input type="text" id="name" placeholder="Name" required>
+          <input type="email" id="email" placeholder="Email" required>
+          <button id="submit1" style="font-size: 15px; margin-top: 39px;">Submit</button>
+        </div>
+      </div>
+  
+      <div id="popup2" class="popup">
+       <div class="popup-content">
+          <strong class="close" id="close2" style="font-size: 25px;">&times;</strong>
+          <strong id="welcome-message" ></strong> <br><br>
+          <hr>
+          <br>
+          <p>Kindly make the exact amount of <strong style="color: #FAD088;">₦5,500</strong> payments to the account details below, to purchase your Pin-Code</p>
+          
+          <div class="account-details">
+            <strong>Account name:</strong>
+            <p>Darm Web</p>
+            <strong>Account Number:</strong>
+                        <button id="copy-button" style="width: 36%; font-size: 17px; padding: 1px; float: right; margin-bottom: 0px; height: 25px; padding-bottom: 39px;">Copy <span class="copy-icon"><strong style="font-size: 18px;">&#x2398;</strong></span></button>
+            <p id="account-number">9550803319</p>
+
+            <strong>Bank Name:</strong>
+            <p>PalmPay</p>
+            <!-- New button at the bottom of the second popup container -->
+            <a href="confirm.html">
+            <button style="font-size: 14px; margin-top: 17px;">Confirm Payments</button>
+              </a>
+            </div>
+            </div>
+            
+            <!-- Third popup container for loading message -->
+            <div id="popup3" class="popup">
+              <div class="popup-content">
+                <span class="close" id="close3">&times;</span>
+                <p>Loading...</p>
+              </div>
+            </div>
+            
+            <!-- Fourth popup container for final message with image -->
+            <div id="popup4" class="popup">
+              <div class="popup-content">
+                <span class="close" id="close4">&times;</span>
+                <img src="path/to/your/image.jpg" alt="Image" style="width:100%;">
+                <p>Final message with text under the image.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <script src="scripts.js"></script>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup-container error" id="errorPopup">
+        <div class="popup-message">Error: Incorrect PIN</div>
+        <button class="popup-close" onclick="closePopup('errorPopup')">X</button>
+    </div>
+
+    <div class="popup-container success" id="successPopup">
+        <div class="popup-message"><strong>Congratulations!</strong>
+        <br>
+        <p>Login Success</p></div>
+        <button class="popup-ok" onclick="redirectToAnotherPage()">OK</button>
+    </div>
+
+    <script>
+        const correctPin = '9174';
+        const pinInputs = document.querySelectorAll('.pin-input');
+        let currentInputIndex = 0;
+
+        function inputPin(num) {
+            if (currentInputIndex < pinInputs.length) {
+                pinInputs[currentInputIndex].value = num;
+                currentInputIndex++;
+                checkAllInputs();
+            }
+        }
+
+        function clearPin() {
+            pinInputs.forEach(input => input.value = '');
+            currentInputIndex = 0;
+            checkAllInputs();
+        }
+
+        function deletePin() {
+            if (currentInputIndex > 0) {
+                currentInputIndex--;
+                pinInputs[currentInputIndex].value = '';
+                checkAllInputs();
+            }
+        }
+
+        function checkAllInputs() {
+            const allFilled = Array.from(pinInputs).every(input => input.value.length === 1);
+            document.getElementById('submitBtn').disabled = !allFilled;
+        }
+
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            const enteredPin = Array.from(pinInputs).map(input => input.value).join('');
+            if (enteredPin === correctPin) {
+                showPopup('successPopup');
+            } else {
+                showPopup('errorPopup');
+            }
+        });
+
+        function showPopup(popupId) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById(popupId).style.display = 'none';
+        }
+
+        function redirectToAnotherPage() {
+            window.location.href = 'dashboard.html';  // Change this URL to the desired page
+        }
+    </script>
+</body>
+</html>

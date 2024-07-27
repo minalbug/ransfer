@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <script src="https://kit.fontawesome.com/3ee0f23889.js" crossorigin="anonymous"></script>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;900&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      color: #010101;
+      background-color: #FFFFFF;
+    }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+        }
+        .button {
+            text-align: center;
+        }
+        .button img {
+            width: 50px;
+            height: 50px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .button p {
+            margin-top: 8px;
+            font-size: 16px;
+            color: #000;
+        }
+        * {
+          margin: 0 auto;
+        }
+        .wallet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+}
+.wallet .wallet-info {
+    text-align: center;
+}
+.wallet .wallet-info p {
+    border: none;
+    background: none;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.wallet .wallet-info .amount {
+    font-size: 24px;
+    padding-left: 0px;
+    font-weight: bold;
+}
+  .wallet-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .wallet-balance {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .action-button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .center-container {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 80%;
+            height: fit-content;
+            margin-top: 30%;
+        }
+        .fixed-bottom-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            color: #211F46;
+            border-top-right-radius: 27px;
+            border-top-left-radius: 27px;
+            padding: 15px;
+            display: none;
+            box-shadow: 0 2px 4px 1px #000;
+            border: 1px solid #ccc;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 40%;
+            /* Adjust as needed */
+            max-height: 40%;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        input {
+          width: 100%;
+          margin: 0 auto;
+          padding: 1px;
+          font-size: 15px;
+           height: 34px;
+           margin-bottom: 17px;
+           margin-top: 8px;
+                 font-family: 'Poppins', sans-serif;
+           border: 1px solid #FAD088;
+        }
+        .label {
+          padding-top: 59px;
+        }
+        button {
+          width: 95%;
+          width: 100%;
+          margin: 0 auto;
+          padding: 1px;
+          font-size: 15px;
+          font-family: 'Poppins', sans-serif;
+           height: 40px;
+           margin-bottom: 17px;
+           margin-top: 8px;
+           color: #000;
+           background: #FAD088;
+           border: none;
+           border-radius: 3px;
+        }
+        .fixed-bottom-container button {
+          width: 90%;
+                font-family: 'Poppins', sans-serif;
+        }
+         .fixed-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #6a4ce4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 10px;
+        }
+        .text {
+            display: flex;
+            flex-direction: column;
+        }
+        .text span {
+            line-height: 1.2;
+        }
+        .name {
+            font-weight: bold;
+        }
+        .welcome {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .container {
+            padding: 2px;
+        }
+          .transaction-container {
+            margin: 10px;
+        }
+        .transaction-card {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 3px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .transaction-amount {
+            color: #00c853;
+            font-weight: bold;
+        }
+        .transaction-debit {
+            color: #d32f2f;
+        }
+        a {
+          text-decoration: none;
+        }
+        .but {
+          width: 100%;
+          position: fixed;
+          background: #FAD088;
+          height: 20px;
+          bottom: 0;
+        }
+    </style>
+</head>
+<body>
+     <div class="fixed-header">
+       <div class="avatar">
+         <span style="font-size: 1.2em;">👤</span>
+       </div>
+       <div class="text">
+         <span class="name" style="padding-right: 180px;">Hi, <span id="inputValue"></span></span>
+         <span class="welcome" style="padding-right: 40px;">Welcome, let's make payments!</span>
+       </div>
+     </div>
+     <br>
+     <br>
+     <br>
+      <div class="wallet">
+        <div class="wallet-info">
+            <p><i class="fa-regular fa-eye"></i> Main Wallet <i class="fa-solid fa-caret-down" style="color: #000;"></i></p>
+   <h2><div class="wallet-balance">₦<span id="walletBalance">0.00</span></div>
+        </div></h2>
+    </div>
+
+
+  </div>
+    <div class="container">
+        <div class="button" onclick="showAddContainer()">
+            <div class="icon"><img src="add.png" alt="Add" style="width: 30px; height: 30px; background: #ccc; padding: 13px;"></div>
+            <p>Add</p>
+        </div>
+        &nbsp;
+        &nbsp;
+        &nbsp; &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <div class="button" onclick="showSendContainer()">
+            <div class="icon"><img src="trf.jpeg" alt="Sell" style="width: 32px; height: 32px; background: #ccc; padding: 13px;"></div>
+            <p>Send</p>
+        </div>
+    </div>
+        <div id="addContainer" class="center-container">
+        <label for="addAmount" style="font-weight: bold;">Enter amount to add:</label>
+        <input type="number" id="addAmount">
+        <button onclick="addAmount()">Submit</button>
+    </div>
+
+      <div id="addContainer" class="center-container">
+        <label for="addAmount" style="font-weight: bold;">Enter amount to add:</label>
+        <input type="number" id="addAmount">
+        <button onclick="addAmount()">Submit</button>
+    </div>
+
+    <div id="sendContainer" class="center-container">
+        <label for="accountName" style="font-weight: bold;">Account Name:</label>
+        <input type="text" id="accountName">
+        <label for="accountNumber" style="font-weight: bold;">Account Number:</label>
+        <input type="number" id="accountNumber">
+        <label for="sendAmount" style="font-weight: bold;">Amount to Send:</label>
+        <input type="tel" id="sendAmount">
+        <label for="sendOption" style="font-weight: bold;">Select an Option:</label>
+        <select id="sendOption" name="sendOption" style="width: 100%;
+        margin: 0 auto;
+        padding: 1px;
+        font-size: 15px;
+        height: 40px;
+        margin-bottom: 17px;
+        margin-top: 8px;
+        border: 1px solid #FAD088; border-radius: 5px; color: #000;" required>
+                              <option value="" disabled selected>Available Banks</option>
+                    <!-- List 25 options directly in HTML -->
+                    <option value="9Payments Service Bank">9Payments Service Bank</option>
+                    <option value="Access Bank PLC">Access Bank PLC</option>
+                    <option value="ACCESSMONEY">ACCESSMONEY</option>
+                    <option value="Carbon">Carbon</option>
+                    <option value="Chase Microfinance Bank">Chase Microfinance Bank</option>
+                    <option value="CitiBank Nigeria">CitiBank Nigeria</option>
+                    <option value="E-Finance">E-Finance</option>
+                    <option value="Eyowo Microfinance Bank">Eyowo Microfinance Bank</option>
+                    <option value="EcoBank Nigeria">EcoBank Nigeria</option>
+                    <option value="eNaira(e-Naira)">eNaira(e-Naira)</option>
+                    <option value="eTransact">eTransact</option>
+                    <option value="FCMB MFB">FCMB MFB</option>
+                    <option value="First Bank Nigeria">First Bank Nigeria</option>
+                    <option value="FairMoney">FairMoney</option>
+                    <option value="Fidelity Bank PLC">Fidelity Bank PLC</option>
+                    <option value="GTBank PLC">GTBank PLC</option>
+                    <option value="Globus Bank">Globus Bank</option>
+                    <option value="GoMoney">GoMoney</option>
+                    <option value="Jaiz Bank">Jaiz Bank</option>
+                    <option value="Keystone Bank">Keystone Bank</option>
+                    <option value="Kuda MicroFianance Bank">Kuda MicroFianance Bank</option>
+                    <option value="Lotus Bank">Lotus Bank</option>
+                    <option value="MTN MoMO PSB">MTN MoMO PSB</option>
+                    <option value="MoniePoint MicroFianance Bank">MoniePoint MicroFianance Bank</option>
+                    <option value="OPTIMUS BANK">OPTIMUS BANK</option>
+                    <option value="OPAY">OPAY</option>           
+                    <option value="PARRALEX">PARRALEX</option>
+                    <option value="Paga">Paga</option>
+                    <option value="Paystack-Titan">Paystack-Titan</option>
+                    <option value="PalmPay">PalmPay</option>
+                    <option value="Polaris Bank">Polaris Bank</option>
+                    <option value="Providus Bank">Providus Bank</option>            
+                    <option value="SmartCash PSB">SmartCash PSB</option>
+                                   <option value="Sparkle">Sparkle</option>            <option value="Stanbic IBTC Bank">Stanbic IBTC Bank</option>            
+            <option value="Sterling Bank">Sterling Bank</option>            <option value="TITAN TRUST BANK">TITAN TRUST BANK</option>
+            <option value="Union Bank Of Nigeria">Union Bank Of Nigeria</option>            <option value="United Bank for Africa">United Bank for Africa</option>
+            <option value="VFD MicroFianance Bank">VFD MicroFianance Bank</option>            <option value="Wema Bank">Wema Bank</option>
+<option value="ZENITH BANK">ZENITH BANK</option>
+        </select>
+        <button onclick="sendAmount()">Send</button>
+        <div id="sendErrorMessage" class="error-message"></div>
+    </div>
+
+    <div id="bottomContainer" class="fixed-bottom-container">
+        <div id="transactionDetails"></div>
+        <h2 style="padding-top: 11px; padding-bottom: 9px;" id="transactionAmount"></h2>
+        <hr>
+          <div class="transaction-detail" style="padding-bottom: 11px; padding-top: 11px;">
+            <strong>Account Name:</strong>
+            <span id="transactionAccountName" class="account-name" style="float: right;"></span>
+        </div>
+        <div class="transaction-detail" style="padding-bottom: 11px;">
+            <strong>Account Number:</strong>
+            <span id="transactionAccountNumber" style="float: right;"></span>
+        </div>
+        <div class="transaction-detail" style="padding-bottom: 11px;">
+            <strong>Bank:</strong>
+            <span id="transactionOption" style="float: right"></span>
+        </div>
+        <div class="transaction-detail" style="padding-bottom: 11px;">
+            <strong>Amount:</strong>
+            <span id="actionAmount" style="float: right;"></span>
+        </div>
+<center>
+        <button onclick="completeTransaction()">Complete Transaction</button>
+        </center>
+    </div>
+    <br>
+    <strong style="padding-left: 18px;">Transactions</strong>
+<a href="success.html">
+ <div class="transaction-container" id="transactionContainer"></div>
+ </a>
+ <div class="but">
+   <center>
+  <b style="font-size: 14px; color: #fff;">Powered by Pyramid</b>
+ </div>
+    <script>
+      let walletBalance = 0;
+      
+      function showAddContainer() {
+        document.getElementById('addContainer').style.display = 'block';
+      }
+      
+      function addAmount() {
+        const amount = parseFloat(document.getElementById('addAmount').value);
+        if (!isNaN(amount) && amount > 0) {
+          walletBalance += amount;
+          document.getElementById('walletBalance').innerText = walletBalance.toFixed(2);
+          document.getElementById('addContainer').style.display = 'none';
+          addTransaction('credit', amount);
+        } else {
+          alert('Please enter a valid amount.');
+        }
+      }
+      
+      function showSendContainer() {
+        document.getElementById('sendContainer').style.display = 'block';
+      }
+      
+      function sendAmount() {
+        const accountName = document.getElementById('accountName').value;
+        const accountNumber = document.getElementById('accountNumber').value;
+        const amount = parseFloat(document.getElementById('sendAmount').value);
+        const sendOption = document.getElementById('sendOption').value;
+      
+        if (!accountName || !accountNumber || isNaN(amount) || amount <= 0) {
+          document.getElementById('sendErrorMessage').innerText = 'All fields are required and amount must be valid.';
+          return;
+        }
+      
+        if (amount > walletBalance) {
+          document.getElementById('sendErrorMessage').innerText = 'Insufficient balance.';
+          return;
+        }
+      
+        walletBalance -= amount;
+        document.getElementById('walletBalance').innerText = walletBalance.toFixed(2);
+      
+        document.getElementById('sendContainer').style.display = 'none';
+        addTransaction('debit', amount);
+      }
+      
+      function addTransaction(type, amount) {
+        const transactionContainer = document.getElementById('transactionContainer');
+        const transactionCard = document.createElement('div');
+        transactionCard.className = 'transaction-card';
+      
+        const transactionDetails = document.createElement('div');
+        transactionDetails.className = 'transaction-details';
+      
+        const transactionType = document.createElement('div');
+        transactionType.textContent = 'Transaction';
+        transactionType.style.fontWeight = 'bold';
+      
+        const transactionId = document.createElement('div');
+        transactionId.textContent = `ID: txn_${Math.random().toString(36).substr(2, 9)}`;
+      
+        const transactionDate = document.createElement('div');
+        const date = new Date();
+        transactionDate.textContent = `Date: ${date.toLocaleDateString()}`;
+      
+        transactionDetails.appendChild(transactionType);
+        transactionDetails.appendChild(transactionId);
+        transactionDetails.appendChild(transactionDate);
+      
+        const transactionAmount = document.createElement('div');
+        transactionAmount.className = `transaction-amount ${type === 'debit' ? 'transaction-debit' : ''}`;
+        transactionAmount.textContent = `${type === 'credit' ? '' : '-'}₦${amount.toFixed(2)}`;
+      
+        transactionCard.appendChild(transactionDetails);
+        transactionCard.appendChild(transactionAmount);
+      
+        transactionContainer.appendChild(transactionCard);
+      }
+      
+      function completeTransaction() {
+        document.getElementById('bottomContainer').style.display = 'none';
+        alert('Transaction completed successfully!');
+        window.location.href = 'https://www.example.com'; // Change this to the URL you want to redirect to
+      }
+     </script>
+</body>
+</html>
